@@ -19,6 +19,6 @@ public class CameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(player.transform.position.x, player.transform.position.y, -10f), ref velocity, 0.35f);
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(player.transform.position.x, player.transform.position.y + player.GetComponent<Rigidbody2D>().velocity.y/5, -10f), ref velocity, 0.4f);
     }
 }

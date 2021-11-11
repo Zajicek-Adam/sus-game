@@ -13,6 +13,7 @@ public class PlayerController2D : MonoBehaviour
     [SerializeField]
     private Animator myAnimator;
     public bool isGrounded = true;
+    private bool canAdd;
     [SerializeField]
   //  private float jumpModifier;
   //  private float calculatedModifier;
@@ -53,8 +54,14 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && myRigidbody.velocity.y > 0)
         {
             spaceTime -= Time.fixedDeltaTime;
-            if(spaceTime >= 0f)
+            if (spaceTime < 0f)
             {
+                canAdd = false;
+                AdditionalJump();
+            }
+            if (spaceTime < 0.15f && spaceTime > 0f)
+            {
+                canAdd = true;
                 AdditionalJump();
             }
         }
@@ -87,12 +94,19 @@ public class PlayerController2D : MonoBehaviour
     }
     private void Jump(float horizontal)
     {
-        myRigidbody.velocity = new Vector2(horizontal * Time.fixedDeltaTime, jumpForce/* * jumpModifier*/);
+        myRigidbody.velocity = new Vector2(horizontal * Time.fixedDeltaTime, jumpForce * Time.fixedDeltaTime/* * jumpModifier*/);
     }
     private void AdditionalJump()
     {
-        Debug.Log("XD");
-        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce * additionalForce);
+        if (canAdd)
+        {
+            Debug.Log("Added velocity");
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce * additionalForce);
+        }
+        else
+        {
+            Debug.Log("Didnt add velocity");
+        }
     }
 }
 
