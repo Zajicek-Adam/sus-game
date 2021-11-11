@@ -22,14 +22,18 @@ public class GroundCheck : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("A");
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Wall"))
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Enemy"))
         {
             playerController.isGrounded = true;
-            playerController.spaceTime = 0.25f;
+            playerController.myRigidbody.gravityScale = playerController.originalGravity;
+            playerController.jumpsLeft = playerController.maxJumps;
         }
     }
-    void OnCollisionExit2D()
+    void OnCollisionExit2D(Collision2D col)
     {
-        playerController.isGrounded = false;
+        if (col.gameObject.tag != "Enemy")
+        {
+            playerController.isGrounded = false;
+        }
     }
 }

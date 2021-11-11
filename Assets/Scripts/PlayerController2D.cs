@@ -3,109 +3,132 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
-{
-    [SerializeField]
-    private Rigidbody2D myRigidbody;
+{ 
+    public Rigidbody2D myRigidbody;
     [SerializeField]
     private float movementSpeed;
     [SerializeField]
     private float jumpForce;
-    [SerializeField]
-    private Animator myAnimator;
-    public bool isGrounded = true;
-    private bool canAdd;
-    [SerializeField]
-  //  private float jumpModifier;
-  //  private float calculatedModifier;
-  //  private float lastDurationInSpace;
+
+    private float buttonHoldTime;
+
+    public bool jumpPressed;
+    public bool jumpHeld;
+    public bool isJumping;
+
+    public int maxJumps;
+    public float originalGravity;
+    public int jumpsLeft;
+
+    public float maxButtonHoldTime;
+    public float maxJumpSpeed;
+    public float maxFallSpeed;
+    public float fallSpeed;
+    public float holdForce;
     public float additionalForce;
-    public float spaceTime;
+    public float gravityMultipler;
+
+    public bool isGrounded = true;
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody.GetComponent<Rigidbody2D>();
+        originalGravity = myRigidbody.gravityScale;
+        jumpsLeft = maxJumps;
+        buttonHoldTime = maxButtonHoldTime;
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            jumpPressed = true;
+        }
+        else
+        {
+            jumpPressed = false;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            jumpHeld = true;
+        }
+        else
+        {
+            jumpHeld = false;
+        }
+        CheckForJump();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = myRigidbody.velocity.y;
+        IsJumping();
         HandleMovement(horizontal, vertical);
-        /*   if (myRigidbody.velocity.x > 0)
-           {
-               myAnimator.SetBool("isRunningRight", true);
-               myAnimator.SetBool("isRunningLeft", false);
-           } 
-           if (myRigidbody.velocity.x < 0)
-           {
-               myAnimator.SetBool("isRunningLeft", true);
-               myAnimator.SetBool("isRunningRight", false);
-           }
-           if (myRigidbody.velocity.x == 0)
-           {
-               myAnimator.SetBool("hasStoppedLeft", true);
-               myAnimator.SetBool("hasStoppedRight", true);
-           }*/
-        if (Input.GetKey(KeyCode.Space) && isGrounded == true)
-        {
-            Jump(horizontal);
-        }
-        if (Input.GetKey(KeyCode.Space) && myRigidbody.velocity.y > 0)
-        {
-            spaceTime -= Time.fixedDeltaTime;
-            if (spaceTime < 0f)
-            {
-                canAdd = false;
-                AdditionalJump();
-            }
-            if (spaceTime < 0.15f && spaceTime > 0f)
-            {
-                canAdd = true;
-                AdditionalJump();
-            }
-        }
     }
     private void HandleMovement(float horizontal, float vertical)
     {
         myRigidbody.velocity = new Vector2(horizontal * movementSpeed * Time.fixedDeltaTime, myRigidbody.velocity.y);
-        /*  if(myRigidbody.velocity.x > 0)
-          {
-              myAnimator.SetBool("isRunningRight", true);
-              myAnimator.SetBool("isRunningLeft", false);
-              myAnimator.SetBool("hasStoppedLeft", false);
-              myAnimator.SetBool("hasStoppedRight", false);
-          }
-          if(myRigidbody.velocity.x < 0)
-          {
-              myAnimator.SetBool("hasStoppedLeft", false);
-              myAnimator.SetBool("hasStoppedRight", false);
-              myAnimator.SetBool("isRunningLeft", true);
-              myAnimator.SetBool("isRunningRight", false);
-          }
-          if(myRigidbody.velocity.x == 0)
-          {
-              myAnimator.SetBool("hasStoppedLeft", true);
-              myAnimator.SetBool("hasStoppedRight", true);
-              myAnimator.SetBool("isRunningRight", false);
-              myAnimator.SetBool("isRunningLeft", false);
-          }*/
-
     }
-    private void Jump(float horizontal)
+    private void CheckForJump()
     {
-        myRigidbody.velocity = new Vector2(horizontal * Time.fixedDeltaTime, jumpForce * Time.fixedDeltaTime/* * jumpModifier*/);
+        if (jumpPressed)
+        {
+            if (!isGrounded && jumpsLeft == maxJumps)
+            {
+                isJumping = false;
+                return;
+            }
+            jumpsLeft--;
+            if (jumpsLeft >= 0)
+            {
+                isJumping = true;
+                myRigidbody.gravityScale = originalGravity;
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0);
+                buttonHoldTime = maxButtonHoldTime;
+                return;
+            }
+        }
+    }
+    private void IsJumping()
+    {
+        if (isJumping)
+        {
+            myRigidbody.AddForce(Vector2.up * jumpForce);
+            AdditionalJump();
+        }
+        if (myRigidbody.velocity.y > maxJumpSpeed)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, maxJumpSpeed);
+        }
+        Falling();
     }
     private void AdditionalJump()
     {
-        if (canAdd)
+        if (jumpHeld)
         {
-            Debug.Log("Added velocity");
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce * additionalForce);
+            buttonHoldTime -= Time.deltaTime;
+            if (buttonHoldTime <= 0)
+            {
+                buttonHoldTime = 0;
+                isJumping = false;
+            }
+            else
+                myRigidbody.AddForce(Vector2.up * holdForce);
         }
         else
         {
-            Debug.Log("Didnt add velocity");
+            isJumping = false;
+        }
+    }
+    private void Falling()
+    {
+        if (!isJumping && myRigidbody.velocity.y < fallSpeed)
+        {
+            myRigidbody.gravityScale = gravityMultipler;
+        }
+        if (myRigidbody.velocity.y < maxFallSpeed)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, maxFallSpeed);
         }
     }
 }
