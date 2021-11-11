@@ -226,7 +226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259504326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.287, z: 0}
+  m_LocalPosition: {x: -0.446, y: -0.287, z: 0}
   m_LocalScale: {x: 0.18897663, y: 0.18897663, z: 0.18897663}
   m_Children:
   - {fileID: 282911907}
@@ -507,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 4.64, z: -10}
+  m_LocalPosition: {x: -0.51, y: 4.64, z: -10}
   m_LocalScale: {x: 2.6177988, y: 2.6177988, z: 2.6177988}
   m_Children: []
   m_Father: {fileID: 0}
@@ -691,7 +691,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804917035}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.41, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 0.30838, y: 0.30838, z: 0.30838}
   m_Children: []
   m_Father: {fileID: 43273510}
@@ -808,6 +808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 259504327}
   cam: {fileID: 519420031}
+  range: 0
 --- !u!1 &2102337516
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 259504329}
-  movementSpeed: 400
+  movementSpeed: 350
   jumpForce: 550
   jumpPressed: 0
   jumpHeld: 0
