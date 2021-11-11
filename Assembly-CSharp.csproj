@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\HandleCollision.cs" />
      <Compile Include="Assets\Scripts\PlayerController2D.cs" />
+     <Compile Include="Assets\Shooting.cs" />
      <Compile Include="Assets\UI pack\Scripts\FillValueNumber.cs" />
      <None Include="Assets\UI pack\Documentation.txt" />
  <Reference Include="UnityEngine">
