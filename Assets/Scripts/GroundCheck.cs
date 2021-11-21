@@ -31,7 +31,7 @@ public class GroundCheck : MonoBehaviour
     }
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag != "Enemy")
+        if (col.gameObject.tag != "Enemy" && col.gameObject.tag != "Wall")
         {
             playerController.isGrounded = false;
         }

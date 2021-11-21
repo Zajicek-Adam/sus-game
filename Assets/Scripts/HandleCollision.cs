@@ -17,11 +17,4 @@ public class HandleCollision : MonoBehaviour
     {
        
     }
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Wall"))
-        {
-            rb.velocity = new Vector2(0f, 0f);
-        }
-    }
 }
