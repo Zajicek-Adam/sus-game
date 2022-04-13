@@ -6,8 +6,9 @@ public class Shooting : MonoBehaviour
 {
     public Transform firePoint;
     public LineRenderer lineRenderer;
-    public EnemyHP enemyhp;
     public Camera cam;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();          
+            //Shoot();          
         }
     }
     IEnumerator HandleFire()
@@ -27,7 +28,7 @@ public class Shooting : MonoBehaviour
         Debug.Log("Waited");
         yield return new WaitForSeconds(0.5f);
     }
-    void Shoot()
+   /* void Shoot()
     {
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -40,8 +41,9 @@ public class Shooting : MonoBehaviour
             if (hit.transform.CompareTag("Enemy"))
             {
                 Debug.Log("Hit Enemy");
+                enemyhp = hit.transform.parent.gameObject.GetComponent<EnemyHP>();
                 enemyhp.GetShot();
             }
         }
-    }
+    }*/
 }
