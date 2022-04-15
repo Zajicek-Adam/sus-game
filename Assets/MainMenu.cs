@@ -18,4 +18,13 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+    //UI cursos changing
+    public void AOnMouseOver()
+    {
+        Cursor.SetCursor(default, Vector2.zero, CursorMode.Auto);
+    }
+    public void AOnMouseExit()
+    {
+        Cursor.SetCursor(default, Vector2.zero, CursorMode.Auto);
+    }
 }
