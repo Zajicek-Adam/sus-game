@@ -19,7 +19,7 @@ public class GroundCheck : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("A");
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Player"))
         {
             playerController.isGrounded = true;
             playerController.myRigidbody.gravityScale = playerController.originalGravity;
@@ -28,7 +28,7 @@ public class GroundCheck : MonoBehaviour
     }
     void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.tag != "Enemy" && col.gameObject.tag != "Wall")
+        if (col.gameObject.tag != "Bullet" && col.gameObject.tag != "Wall")
         {
             playerController.isGrounded = false;
         }

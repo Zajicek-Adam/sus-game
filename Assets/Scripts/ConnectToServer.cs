@@ -11,10 +11,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.ConnectUsingSettings();
     }
-    void DelayJoin()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
 
     public override void OnConnectedToMaster()
     {
@@ -22,6 +18,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
-        Invoke("DelayJoin", 2f + Random.Range(0f, 0.9f));
+        SceneManager.LoadScene("Lobby");
     }
 }

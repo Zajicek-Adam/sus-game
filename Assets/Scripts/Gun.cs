@@ -6,15 +6,15 @@ using Photon.Pun;
 public class Gun : MonoBehaviour
 {
     private Vector3 pos;
-    public Transform player;
-    public Transform banana;
+    private Transform player;
 
     PhotonView _view;
 
     // Start is called before the first frame update
     void Start()
     {
-        _view = gameObject.GetComponentInParent<PhotonView>();
+        player = transform.parent;
+        _view = gameObject.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -23,7 +23,7 @@ public class Gun : MonoBehaviour
         if (_view.IsMine)
         {
             transform.position = player.position;
-            pos = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - banana.position).normalized;
+            pos = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             if (pos.z > -0.995f && pos.z < 0.995f)
             {
                 float rot_z = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;

@@ -9,7 +9,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void Start()
         {
-            Destroy(gameObject, 3.0f);
+            Destroy(gameObject, 10.0f);
         }
 
         public void OnCollisionEnter(Collision collision)
