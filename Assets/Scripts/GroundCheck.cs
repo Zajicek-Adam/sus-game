@@ -9,6 +9,7 @@ public class GroundCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerController = gameObject.GetComponent<PlayerController2D>();
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class GroundCheck : MonoBehaviour
         {
             playerController.isGrounded = true;
             playerController.myRigidbody.gravityScale = playerController.originalGravity;
-            playerController.jumpsLeft = playerController.maxJumps;
+            playerController.jumpsLeft = (int)playerController.stats.NumberOfJumps;
         }
     }
     void OnCollisionExit2D(Collision2D col)

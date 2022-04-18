@@ -5,9 +5,8 @@ using Photon.Pun;
 
 public class PlayerController2D : MonoBehaviour
 {
+    public Stats stats;
     public Rigidbody2D myRigidbody;
-    [SerializeField]
-    private float movementSpeed;
     [SerializeField]
     private float jumpForce;
 
@@ -17,7 +16,7 @@ public class PlayerController2D : MonoBehaviour
     public bool jumpHeld;
     public bool isJumping;
 
-    public int maxJumps;
+   // public int maxJumps; STATS
     public float originalGravity;
     public int jumpsLeft;
 
@@ -31,16 +30,16 @@ public class PlayerController2D : MonoBehaviour
 
     public bool isGrounded = true;
 
-    PhotonView view;
+    public PhotonView view;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody.GetComponent<Rigidbody2D>();
         originalGravity = myRigidbody.gravityScale;
-        jumpsLeft = maxJumps;
+        jumpsLeft = (int)stats.NumberOfJumps;
         buttonHoldTime = maxButtonHoldTime;
-        view = GetComponent<PhotonView>();
+        view = gameObject.GetComponent<PhotonView>();
     }
 
     void Update()
@@ -80,7 +79,7 @@ public class PlayerController2D : MonoBehaviour
     private void HandleMovement(float horizontal, float vertical)
     {
         if (view.IsMine)
-            myRigidbody.velocity = new Vector2(horizontal * movementSpeed * Time.fixedDeltaTime, myRigidbody.velocity.y);
+            myRigidbody.velocity = new Vector2(horizontal * stats.MovementSpeed * Time.fixedDeltaTime, myRigidbody.velocity.y);
     }
     private void CheckForJump()
     {
@@ -88,7 +87,7 @@ public class PlayerController2D : MonoBehaviour
         {
             if (jumpPressed)
             {
-                if (!isGrounded && jumpsLeft == maxJumps)
+                if (!isGrounded && jumpsLeft == stats.NumberOfJumps)
                 {
                     isJumping = false;
                     return;

@@ -9,6 +9,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }
 

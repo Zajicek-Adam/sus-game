@@ -326,7 +326,7 @@ PrefabInstance:
     - target: {fileID: 6507933771995611713, guid: 78f5a445d02388b41bc2ba0016fcd56d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 18.118525
+      value: 11.812144
       objectReference: {fileID: 0}
     - target: {fileID: 6507933771995611713, guid: 78f5a445d02388b41bc2ba0016fcd56d,
         type: 3}
@@ -637,10 +637,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d051f0d4e3c8247b3a98fcd7b3a6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2512849025922749309, guid: d49886a0831529440b7c5d54b98effe1,
+  playerPrefab: {fileID: 7886226733582902943, guid: d49886a0831529440b7c5d54b98effe1,
     type: 3}
-  minX: -9.71
-  maxX: 11.98
+  minX: -4
+  maxX: 4
   minY: -2.35
   maxY: 4.67
 --- !u!4 &1484713035

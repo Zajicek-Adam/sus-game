@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviourPun
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
@@ -24,7 +24,7 @@ public class Shooting : MonoBehaviour
     {
         if (view.IsMine && Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            view.RPC("Shoot", RpcTarget.All);
         }
     }
     IEnumerator HandleFire()
@@ -32,8 +32,12 @@ public class Shooting : MonoBehaviour
         Debug.Log("Waited");
         yield return new WaitForSeconds(0.5f);
     }
+
+    [PunRPC]
     void Shoot()
     {
+        if (!view.IsMine)
+            return;
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody2D>().AddForce(-firePoint.right * firePower * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
